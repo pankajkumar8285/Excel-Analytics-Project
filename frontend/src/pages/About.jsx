@@ -31,7 +31,7 @@ export const About = () => {
             data-aos-delay={idx * 100}
             className="relative bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transform transition-all duration-500 hover:scale-105 group overflow-hidden"
           >
-            {/* Shine reflection effect */}
+            
           <div className="absolute left-[-50%] top-0 h-full w-[200%] -skew-x-12 bg-white opacity-10 transition-all duration-700 group-hover:left-[100%] pointer-events-none"></div>
 
 

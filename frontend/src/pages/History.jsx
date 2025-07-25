@@ -25,7 +25,7 @@ const History = () => {
 
   return (
     <div className="flex">
-      {/* Main Content */}
+      
       <main className="flex-1 min-h-screen bg-slate-100 pt-4 pb-10 px-4 sm:px-6 md:px-10 md:ml-64">
         <h1 className="text-2xl sm:text-3xl font-bold text-blue-700 mb-6">
           Upload History

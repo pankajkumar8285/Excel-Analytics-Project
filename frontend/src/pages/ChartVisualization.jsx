@@ -155,7 +155,7 @@ const ChartVisualization = ({ metadata, data }) => {
           </div>
         )}
 
-        {/* Controls */}
+   
         <div className="flex flex-col sm:flex-row sm:items-end gap-4 mb-6">
           <button
             title="Download PNG"

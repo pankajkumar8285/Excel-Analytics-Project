@@ -34,7 +34,7 @@ const Insight = () => {
     <div className="pt-20 px-4 sm:px-6 md:px-8 md:ml-64 bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-blue-600">AI Insights</h1>
 
-      {/* File Selector */}
+  
       <div className="bg-white p-6 rounded shadow mb-6">
         <label className="block font-semibold mb-2 text-gray-700">
           Select a file:
@@ -60,7 +60,7 @@ const Insight = () => {
         </button>
       </div>
 
-      {/* Insight Display */}
+   
       {insight && (
         <motion.div
           className="bg-white p-6 rounded shadow"

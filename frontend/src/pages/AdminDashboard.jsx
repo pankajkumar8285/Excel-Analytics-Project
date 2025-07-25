@@ -138,7 +138,7 @@ export const AdminDashboard = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
-      {/* Sidebar */}
+ 
       <aside className="bg-white shadow-md w-full md:w-64 flex flex-col items-center p-6 gap-4">
         <div className="relative w-28 h-28 sm:w-32 sm:h-32 group">
           <img
@@ -175,7 +175,7 @@ export const AdminDashboard = () => {
         </button>
       </aside>
 
-      {/* Main Content */}
+    
       <main className="flex-1 p-4 sm:p-6 md:p-10 relative">
         {loading ? (
           <p className="text-center text-lg font-medium">Loading...</p>

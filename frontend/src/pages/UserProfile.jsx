@@ -114,7 +114,7 @@ const UserProfile = () => {
             </div>
           </div>
 
-          {/* Editable Fields */}
+        
           <div className="space-y-4">
             {Object.entries(editData).map(([key, value], index) => (
               <motion.div
@@ -141,7 +141,7 @@ const UserProfile = () => {
             ))}
           </div>
 
-          {/* Buttons */}
+       
           <div className="flex flex-col sm:flex-row justify-between items-center pt-6 gap-4">
             {isEditing ? (
               <div className="flex gap-4">

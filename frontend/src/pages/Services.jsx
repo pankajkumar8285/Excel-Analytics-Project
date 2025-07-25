@@ -51,7 +51,7 @@ export const Services = () => {
             data-aos-delay={idx * 100}
             className="group bg-white p-6 rounded-xl w-full sm:w-80 shadow transition-all duration-500 hover:scale-105 hover:shadow-xl relative overflow-hidden"
           >
-            {/* Reflection effect */}
+            
             <div className="absolute left-[-50%] top-0 h-full w-[200%] -skew-x-12 bg-white opacity-10 transition-all duration-700 group-hover:left-[100%] pointer-events-none" />
 
             <div className="flex items-center gap-4 mb-4">

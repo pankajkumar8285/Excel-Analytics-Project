@@ -19,7 +19,7 @@ export const Home = () => {
     <div >
       <Navbar />
 
-      {/* Hero Section */}
+   
       <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-blue-50 to-purple-100 text-center">
         <div className="max-w-4xl w-full">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4" data-aos="fade-up">
@@ -55,7 +55,7 @@ export const Home = () => {
             </button>
           </div>
 
-          {/* Stat Boxes */}
+         
           <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
             data-aos="fade-up"
@@ -76,14 +76,13 @@ export const Home = () => {
   );
 };
 
-// Reusable stat box
+
 function StatBox({ label, value }) {
   return (
     <div className="group bg-white px-6 py-8 rounded-xl shadow text-center w-full transform transition duration-500 hover:scale-105 hover:shadow-xl relative overflow-hidden">
       <h3 className="text-xl font-bold text-gray-800">{value}</h3>
       <p className="text-sm text-gray-500">{label}</p>
 
-      {/* Reflection effect on hover */}
       <div className="absolute left-[-50%] top-0 h-full w-[200%] -skew-x-12 bg-white opacity-10 transition-all duration-700 group-hover:left-[100%] pointer-events-none"></div>
     </div>
   );

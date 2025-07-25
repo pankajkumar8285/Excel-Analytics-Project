@@ -249,7 +249,7 @@ const DataAnalysis = () => {
               </div>
             </div>
 
-            {/* 🔽 Responsive Scrollable Table */}
+            
             <div className="bg-white/60 backdrop-blur-md border border-white/30 p-6 rounded-2xl shadow-md mb-10">
               <h3 className="text-lg font-semibold mb-4">👁️ Data Preview</h3>
 
