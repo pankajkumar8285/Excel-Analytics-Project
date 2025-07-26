@@ -8,7 +8,6 @@ const AppContext = createContext();
 export const AppContextProvider = (props) => {
 
     const backendUrl =import.meta.env.VITE_BACKEND_URL;
-    console.log(backendUrl)
     const [isLoggedin, setLoggedin] = useState(false);
     const [userData, setUserData] = useState(null);
     const [adminData, setAdminData] = useState(null)

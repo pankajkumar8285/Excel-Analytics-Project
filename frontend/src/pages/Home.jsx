@@ -18,8 +18,6 @@ export const Home = () => {
   return (
     <div >
       <Navbar />
-
-   
       <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-blue-50 to-purple-100 text-center">
         <div className="max-w-4xl w-full">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4" data-aos="fade-up">
