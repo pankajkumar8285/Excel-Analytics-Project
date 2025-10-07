@@ -1,46 +1,41 @@
 import React, { useContext, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { assets } from "../assets/assets";
-import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaUser } from "react-icons/fa";
 
 export const Login = () => {
   const navigate = useNavigate();
-
   const { backendUrl, getUserData } = useContext(AppContext);
 
-  const [state, setState] = useState("Sign Up");
+  const [state, setState] = useState("Login");
   const [fullname, setFullName] = useState("");
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [identifier, setIdentifier] = useState("");
-  
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-
     axios.defaults.withCredentials = true;
+
     try {
       if (state === "Sign Up") {
-        const { data } = await axios.post(
-          `${backendUrl}/api/v1/user/register`,
-          {
-            fullname,
-            username,
-            email,
-            password,
-          }
-        );
+        const { data } = await axios.post(`${backendUrl}/api/v1/user/register`, {
+          fullname,
+          username,
+          email,
+          password,
+        });
 
         if (data.success) {
-          alert("Registration Successful");
+          toast.success("Registration Successful!");
           await getUserData();
           setState("Login");
-        } else {
-          toast.error(data.message);
-        }
+        } else toast.error(data.message);
       } else {
         const { data } = await axios.post(`${backendUrl}/api/v1/user/login`, {
           identifier,
@@ -48,11 +43,10 @@ export const Login = () => {
         });
 
         if (data.success) {
-          navigate("/dashboard");
+          toast.success("Welcome Back!");
           await getUserData();
-        } else {
-          toast.error(data.message);
-        }
+          navigate("/dashboard");
+        } else toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
@@ -61,133 +55,160 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-6 py-6 sm:px-none bg-gradient-to-br  from-blue-200 to-purple-400">
-      <div className="bg-slate-900 p-10 rounded-lg  shadow-lg w-full sm:w-96 text-indigo-300 text-sm">
-        <div className="flex justify-center mb-4">
-          <img
-            onClick={() => navigate("/")}
-            src="/dropbox.png"
-            alt=""
-            className="w-10 sm:w-12"
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-400 px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl w-full sm:w-[400px] text-white overflow-hidden relative"
+      >
+        {/* 🟢 Animated Switch Tabs */}
+        <div className="relative flex w-full">
+          {["Login", "Sign Up"].map((label) => (
+            <button
+              key={label}
+              onClick={() => setState(label)}
+              className={`relative w-1/2 py-3 text-center text-lg font-semibold transition-all duration-300 ${
+                state === label ? "text-white" : "text-white/60 hover:text-white"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+          <motion.div
+            layout
+            className={`absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-cyan-400 to-pink-400 rounded-full transition-all duration-500 ${
+              state === "Sign Up" ? "translate-x-full" : ""
+            }`}
+            style={{
+              width: "50%",
+            }}
           />
         </div>
 
-        <h2 className="text-3xl font-semibold text-white text-center mb-3">
-          {state === "Sign Up" ? "Create account" : "Login"}
-        </h2>
-        <p className="text-center text-sm mb-6">
-          {state === "Sign Up"
-            ? "Create your account"
-            : "Login to your account!"}
-        </p>
-        <form onSubmit={onSubmitHandler}>
-          {state === "Sign Up" && (
-            <>
-              <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]">
-                <img src={assets.person_icon} alt="" />
-                <input
-                  onChange={(e) => setFullName(e.target.value)}
-                  value={fullname}
-                  className="bg-transparent outline-none"
-                  type="text"
-                  placeholder="Full Name"
-                  required
-                />
-              </div>
-              <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]">
-                <FaUser className="text-gray-500" />
-                <input
-                  onChange={(e) => setUserName(e.target.value.toLowerCase())}
-                  value={username}
-                  className="bg-transparent outline-none"
-                  type="text"
-                  placeholder="username"
-                  required
-                />
-              </div>
-            </>
-          )}
-
-          {state === "Sign Up" ? (
-            <>
-           
-              <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]">
-                <img src={assets.mail_icon} alt="" />
-                <input
-                  onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                  value={email}
-                  className="bg-transparent outline-none"
-                  type="email"
-                  placeholder="Email"
-                  required
-                />
-              </div>
-            </>
-          ) : (
-            <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]">
-              <img src={assets.mail_icon} alt="" />
-              <input
-                onChange={(e) => setIdentifier(e.target.value.toLowerCase())}
-                value={identifier}
-                className="bg-transparent outline-none"
-                type="text"
-                placeholder="Username or Email"
-                required
-              />
-            </div>
-          )}
-
-          <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]">
-            <img src={assets.lock_icon} alt="" />
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              className="bg-transparent outline-none"
-              type="password"
-              placeholder="Password"
-              required
+        <div className="p-8">
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <img
+              onClick={() => navigate("/")}
+              src="/dropbox.png"
+              alt="Logo"
+              className="w-14 cursor-pointer hover:scale-105 transition-transform"
             />
           </div>
 
-          {state === "Login" && (
-            <p
-              onClick={() => navigate("/reset-password")}
-              className="mb-4 text-indigo-500 cursor-pointer"
+          {/* Form Container */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={state}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.5 }}
             >
-              Forgot password?
-            </p>
-          )}
+              <h2 className="text-2xl font-bold text-center mb-6 text-white drop-shadow-md">
+                {state === "Sign Up" ? "Create Account" : "Welcome Back!"}
+              </h2>
 
-          <button className="w-full py-2.5 rounded-full cursor-pointer bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium">
-            {state}
-          </button>
-        </form>
-        {state === "Sign Up" ? (
-          <p className="text-gray-400 text-center text-xs mt-4">
-            Already have an account? {"  "}
+              <form onSubmit={onSubmitHandler}>
+                {state === "Sign Up" && (
+                  <>
+                    <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-white/20 focus-within:bg-white/30 transition">
+                      <img src={assets.person_icon} alt="" />
+                      <input
+                        onChange={(e) => setFullName(e.target.value)}
+                        value={fullname}
+                        className="bg-transparent outline-none w-full placeholder-white/80"
+                        type="text"
+                        placeholder="Full Name"
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-white/20 focus-within:bg-white/30 transition">
+                      <FaUser className="text-gray-300" />
+                      <input
+                        onChange={(e) => setUserName(e.target.value.toLowerCase())}
+                        value={username}
+                        className="bg-transparent outline-none w-full placeholder-white/80"
+                        type="text"
+                        placeholder="Username"
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-white/20 focus-within:bg-white/30 transition">
+                      <img src={assets.mail_icon} alt="" />
+                      <input
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                        value={email}
+                        className="bg-transparent outline-none w-full placeholder-white/80"
+                        type="email"
+                        placeholder="Email"
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+
+                {state === "Login" && (
+                  <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-white/20 focus-within:bg-white/30 transition">
+                    <img src={assets.mail_icon} alt="" />
+                    <input
+                      onChange={(e) => setIdentifier(e.target.value.toLowerCase())}
+                      value={identifier}
+                      className="bg-transparent outline-none w-full placeholder-white/80"
+                      type="text"
+                      placeholder="Username or Email"
+                      required
+                    />
+                  </div>
+                )}
+
+                <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-white/20 focus-within:bg-white/30 transition">
+                  <img src={assets.lock_icon} alt="" />
+                  <input
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    className="bg-transparent outline-none w-full placeholder-white/80"
+                    type="password"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+
+                {state === "Login" && (
+                  <p
+                    onClick={() => navigate("/reset-password")}
+                    className="text-indigo-200 text-right cursor-pointer text-sm mb-3 hover:underline"
+                  >
+                    Forgot password?
+                  </p>
+                )}
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full py-2.5 rounded-full bg-white text-indigo-700 font-semibold shadow-md hover:shadow-lg hover:bg-indigo-100 transition-all"
+                >
+                  {state}
+                </motion.button>
+              </form>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Switch to Admin */}
+          <p className="text-center text-xs text-indigo-100 mt-4">
+            Admin account?{" "}
             <span
-              onClick={() => setState("Login")}
-              className="text-blue-400 cursor-pointer underline"
+              onClick={() => navigate("/admin-login")}
+              className="cursor-pointer underline hover:text-white"
             >
-              Login here
+              Admin Login
             </span>
           </p>
-        ) : (
-          <p className="text-gray-400 text-center text-xs mt-4">
-            Don't have an account? {"  "}
-            <span
-              onClick={() => setState("Sign Up")}
-              className="text-blue-400 cursor-pointer underline"
-            >
-              Sign up
-            </span>
-          </p>
-        )}
-        <p className="text-gray-400 text-center text-xs mt-4">
-          Admin account!  {"   "}
-          <span onClick={() => navigate('/admin-login')} className="text-blue-400 cursor-pointer underline">Admin Login</span>
-        </p>
-      </div>
+        </div>
+      </motion.div>
     </div>
   );
 };
