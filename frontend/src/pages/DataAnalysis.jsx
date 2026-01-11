@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import {
   FaFileExcel,
@@ -8,6 +8,7 @@ import {
   FaHashtag,
   FaTags,
 } from "react-icons/fa";
+import { AppContext } from "../context/AppContext";
 import ChartVisualization from "./ChartVisualization";
 
 const DataAnalysis = () => {
@@ -15,6 +16,7 @@ const DataAnalysis = () => {
   const [metadata, setMetadata] = useState(null);
   const [previewData, setPreviewData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { backendUrl } = useContext(AppContext);
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -44,7 +46,7 @@ const DataAnalysis = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5500/api/v1/file/upload",
+        `${backendUrl}/api/v1/file/upload`,
         formData,
         {
           headers: {
