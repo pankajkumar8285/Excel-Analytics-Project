@@ -7,7 +7,7 @@ const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
 
-    const backendUrl ="https://excel-analytics-bln0.onrender.com";
+    const backendUrl ="https://excel-analytics-project-7jke.onrender.com";
     const [isLoggedin, setLoggedin] = useState(false);
     const [userData, setUserData] = useState(null);
     const [adminData, setAdminData] = useState(null)
