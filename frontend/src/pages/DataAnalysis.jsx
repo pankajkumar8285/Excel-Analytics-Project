@@ -99,6 +99,7 @@ const DataAnalysis = () => {
               <input
                 type="file"
                 onChange={handleFileChange}
+                accept=".xlsx,.xls,.csv"
                 className="border p-2 rounded"
               />
               <button
