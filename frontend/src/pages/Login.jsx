@@ -65,7 +65,7 @@ export const Login = () => {
         transition={{ duration: 0.6 }}
         className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl w-full sm:w-[400px] text-white overflow-hidden relative"
       >
-        {/*  Animated Switch Tabs */}
+       
         <div className="relative flex w-full">
           {["Login", "Sign Up"].map((label) => (
             <button
@@ -92,7 +92,7 @@ export const Login = () => {
         </div>
 
         <div className="p-8">
-          {/* Logo */}
+          
           <div className="flex justify-center mb-6">
             <img
               onClick={() => navigate("/")}
@@ -102,7 +102,7 @@ export const Login = () => {
             />
           </div>
 
-          {/* Form Container */}
+         
           <AnimatePresence mode="wait">
             <motion.div
               key={state}
@@ -206,7 +206,7 @@ export const Login = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Switch to Admin */}
+          
           <p className="text-center text-xs text-indigo-100 mt-4">
             Admin account?{" "}
             <span

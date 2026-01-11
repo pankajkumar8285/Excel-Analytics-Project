@@ -52,7 +52,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* ☰ Open Button on Mobile */}
+      
       {!isMobileOpen && (
         <div className="md:hidden fixed top-4 left-4 z-[60]">
           <button
@@ -64,7 +64,7 @@ const Sidebar = () => {
         </div>
       )}
 
-      {/* 🖥 Sidebar (Desktop) - Reduced padding left */}
+      
       <div className="hidden md:flex md:flex-col md:fixed md:top-0 md:left-0 md:h-screen md:w-64 bg-white shadow-md px-3 py-5 z-40">
         <UserInfo userData={userData} />
         <NavItems
@@ -74,7 +74,7 @@ const Sidebar = () => {
         />
       </div>
 
-      {/* 📱 Sidebar Drawer (Mobile only) - unchanged */}
+      
       {isMobileOpen && (
         <div
           className="fixed inset-0 z-50 bg-black bg-opacity-40"
