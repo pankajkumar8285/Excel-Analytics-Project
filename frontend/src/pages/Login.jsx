@@ -24,12 +24,15 @@ export const Login = () => {
 
     try {
       if (state === "Sign Up") {
-        const { data } = await axios.post(`${backendUrl}/api/v1/user/register`, {
-          fullname,
-          username,
-          email,
-          password,
-        });
+        const { data } = await axios.post(
+          `${backendUrl}/api/v1/user/register`,
+          {
+            fullname,
+            username,
+            email,
+            password,
+          }
+        );
 
         if (data.success) {
           toast.success("Registration Successful!");
@@ -62,14 +65,16 @@ export const Login = () => {
         transition={{ duration: 0.6 }}
         className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl w-full sm:w-[400px] text-white overflow-hidden relative"
       >
-        {/* 🟢 Animated Switch Tabs */}
+        {/*  Animated Switch Tabs */}
         <div className="relative flex w-full">
           {["Login", "Sign Up"].map((label) => (
             <button
               key={label}
               onClick={() => setState(label)}
               className={`relative w-1/2 py-3 text-center text-lg font-semibold transition-all duration-300 ${
-                state === label ? "text-white" : "text-white/60 hover:text-white"
+                state === label
+                  ? "text-white"
+                  : "text-white/60 hover:text-white"
               }`}
             >
               {label}
@@ -93,7 +98,7 @@ export const Login = () => {
               onClick={() => navigate("/")}
               src="/dropbox.png"
               alt="Logo"
-              className="w-14 cursor-pointer hover:scale-105 transition-transform"
+              className="w-14 cursor-pointer hover:scale-110 hover:drop-shadow-[0_0_20px_#60a5fa] transition-all duration-300"
             />
           </div>
 
@@ -118,7 +123,7 @@ export const Login = () => {
                       <input
                         onChange={(e) => setFullName(e.target.value)}
                         value={fullname}
-                        className="bg-transparent outline-none w-full placeholder-white/80"
+                        className="bg-transparent outline-none w-full"
                         type="text"
                         placeholder="Full Name"
                         required
@@ -128,7 +133,9 @@ export const Login = () => {
                     <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-white/20 focus-within:bg-white/30 transition">
                       <FaUser className="text-gray-300" />
                       <input
-                        onChange={(e) => setUserName(e.target.value.toLowerCase())}
+                        onChange={(e) =>
+                          setUserName(e.target.value.toLowerCase())
+                        }
                         value={username}
                         className="bg-transparent outline-none w-full placeholder-white/80"
                         type="text"
@@ -155,7 +162,9 @@ export const Login = () => {
                   <div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-white/20 focus-within:bg-white/30 transition">
                     <img src={assets.mail_icon} alt="" />
                     <input
-                      onChange={(e) => setIdentifier(e.target.value.toLowerCase())}
+                      onChange={(e) =>
+                        setIdentifier(e.target.value.toLowerCase())
+                      }
                       value={identifier}
                       className="bg-transparent outline-none w-full placeholder-white/80"
                       type="text"
