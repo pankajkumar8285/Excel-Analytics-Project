@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from 'cookie-parser';
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cors({
   origin:"https://excel-analytics-project-1-79a0.onrender.com" ,
