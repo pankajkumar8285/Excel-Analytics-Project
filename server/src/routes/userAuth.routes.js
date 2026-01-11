@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  editProfile,
   getCurrentUser,
   logoutUser,
   resetOtp,
@@ -20,6 +21,7 @@ router.route("/logout").post(verifyUser, logoutUser);
 router.route("/reset-otp").post(resetOtp);
 router.route("/reset-password").post(resetPassword);
 router.route("/get-user").get(verifyUser, getCurrentUser);
+router.route("/editprofile").put(verifyUser, editProfile);
 router
   .route("/upload-avatar")
   .post(verifyUser, uploadFile.single("avatar"), uploadAvatar);

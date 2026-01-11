@@ -306,9 +306,36 @@ const uploadAvatar = asyncHandler(async (req, res) => {
 });
 
 
-const editProfile = asyncHandler(async(req,res) => {
-    
-})
+const editProfile = asyncHandler(async (req, res) => {
+  const { fullname, username } = req.body;
+
+  
+  const user = await User.findById(req.user._id).select("-password -refreshToken");
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+ 
+  if (username && username !== user.username) {
+    const usernameExists = await User.findOne({ username });
+    if (usernameExists) {
+      throw new ApiError(400, "Username Already taken")
+    }
+  }
+
+  
+  if (fullname) user.fullname = fullname;
+  if (username) user.username = username;
+
+  
+  await user.save();
+
+  return res.status(200).json(new ApiResponse(200, user, "Profile updated successfully"));
+});
+
 
 
 const getCurrentUser = asyncHandler(async (req, res) => {
@@ -333,4 +360,5 @@ export {
   resetPassword,
   getCurrentUser,
   uploadAvatar,
+  editProfile
 };

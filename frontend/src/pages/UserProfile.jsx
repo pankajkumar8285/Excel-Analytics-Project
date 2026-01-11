@@ -16,6 +16,7 @@ const fadeIn = {
 
 const UserProfile = () => {
   const { userData, backendUrl, getUserData } = useContext(AppContext);
+
   const [avatarPreview, setAvatarPreview] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -24,25 +25,32 @@ const UserProfile = () => {
     fullname: "",
     username: "",
     email: "",
-    password: "********",
   });
 
+  // Load user data
   useEffect(() => {
-    if (!userData) getUserData();
-    else {
+    if (!userData) {
+      getUserData();
+    } else {
       setAvatarPreview(userData.avatar);
       setEditData({
         fullname: userData.fullname,
         username: userData.username,
         email: userData.email,
-        password: "********",
       });
     }
   }, [userData]);
 
+  // Handle input change
+  const handleEdit = (field, value) => {
+    setEditData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Upload avatar
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
     const formData = new FormData();
     formData.append("avatar", file);
 
@@ -58,9 +66,11 @@ const UserProfile = () => {
       );
 
       if (data.success) {
-        toast.success("Avatar updated");
+        toast.success("Avatar updated successfully");
         getUserData();
-      } else toast.error(data.message);
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
       toast.error("Failed to upload avatar");
     } finally {
@@ -68,13 +78,28 @@ const UserProfile = () => {
     }
   };
 
-  const handleEdit = (field, value) => {
-    setEditData((prev) => ({ ...prev, [field]: value }));
-  };
+  // Save profile changes
+  const handleSave = async () => {
+    try {
+      const { data } = await axios.put(
+        `${backendUrl}/api/v1/user/editprofile`,
+        {
+          fullname: editData.fullname,
+          username: editData.username,
+        },
+        { withCredentials: true }
+      );
 
-  const handleSave = () => {
-    setIsEditing(false);
-    toast.success("Changes saved (mock only)");
+      if (data.success) {
+        toast.success("Profile updated successfully");
+        getUserData();
+        setIsEditing(false);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Update failed");
+    }
   };
 
   return (
@@ -86,7 +111,7 @@ const UserProfile = () => {
     >
       <main className="flex-1 md:ml-64 p-4 sm:p-6 w-full">
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-4 sm:p-6">
-          <h2 className="text-2xl font-bold text-blue-700 text-center mb-6 sm:mb-8">
+          <h2 className="text-2xl font-bold text-blue-700 text-center mb-8">
             User Profile
           </h2>
 
@@ -101,7 +126,7 @@ const UserProfile = () => {
                 alt="avatar"
                 className="w-full h-full object-cover rounded-full border-4 border-indigo-500"
               />
-              <label className="absolute bottom-0 right-0 bg-indigo-600 text-white p-1 rounded-full cursor-pointer">
+              <label className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer">
                 <FaEdit size={14} />
                 <input
                   type="file"
@@ -114,7 +139,7 @@ const UserProfile = () => {
             </div>
           </div>
 
-        
+          {/* Profile Fields */}
           <div className="space-y-4">
             {Object.entries(editData).map(([key, value], index) => (
               <motion.div
@@ -129,22 +154,24 @@ const UserProfile = () => {
                   {key}
                 </label>
                 <input
-                  type={key === "password" ? "password" : "text"}
+                  type="text"
                   value={value}
-                  disabled={!isEditing || key === "password"}
+                  disabled={!isEditing || key === "email"}
                   onChange={(e) => handleEdit(key, e.target.value)}
                   className={`w-full bg-transparent outline-none border-b border-gray-300 text-gray-800 py-1 ${
-                    !isEditing && key !== "password" ? "cursor-default" : ""
+                    !isEditing || key === "email"
+                      ? "cursor-not-allowed"
+                      : ""
                   }`}
                 />
               </motion.div>
             ))}
           </div>
 
-       
-          <div className="flex flex-col sm:flex-row justify-between items-center pt-6 gap-4">
+          {/* Actions */}
+          <div className="flex justify-center pt-6 gap-4">
             {isEditing ? (
-              <div className="flex gap-4">
+              <>
                 <button
                   onClick={() => setIsEditing(false)}
                   className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition"
@@ -153,15 +180,15 @@ const UserProfile = () => {
                 </button>
                 <button
                   onClick={handleSave}
-                  className="px-4 py-2 bg-indigo-600 text-white cursor-pointer rounded-lg hover:bg-indigo-700 transition"
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
                 >
                   Save
                 </button>
-              </div>
+              </>
             ) : (
               <button
                 onClick={() => setIsEditing(true)}
-                className="px-4 py-2 bg-indigo-600 text-white cursor-pointer rounded-lg hover:bg-indigo-700 transition"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
               >
                 Edit Profile
               </button>
