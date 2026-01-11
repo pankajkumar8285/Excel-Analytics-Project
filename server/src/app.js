@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN ,
+  origin:"https://excel-analytics-project-1-79a0.onrender.com" ,
   credentials: true
 }));
 app.use(cookieParser())
