@@ -101,9 +101,8 @@ const userSignIn = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Incorrect user credientials");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
-    user
-  );
+  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
+
 
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
