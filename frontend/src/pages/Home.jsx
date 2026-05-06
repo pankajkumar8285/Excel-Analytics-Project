@@ -18,7 +18,7 @@ export const Home = () => {
   return (
     <div >
       <Navbar />
-      <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-blue-50 to-purple-100 text-center">
+      <section className="min-h-screen flex flex-col items-center justify-center px-6 mt-8 sm:mt-0 text-center">
         <div className="max-w-4xl w-full">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4" data-aos="fade-up">
             Welcome to <span className="bg-gradient-to-r from-blue-500 to-orange-500 text-transparent bg-clip-text">InsightGrid</span>

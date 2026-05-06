@@ -24,7 +24,7 @@ const generateAccessAndRefreshToken = async (userId) => {
   }
 };
 
-const userSingnUp = asyncHandler(async (req, res) => {
+const userSignUp = asyncHandler(async (req, res) => {
   const { fullname, username, email, password } = req.body;
 
   if (!fullname || !username || !email || !password) {
@@ -284,7 +284,6 @@ const uploadAvatar = asyncHandler(async (req, res) => {
   }
 
   const avatarPath = req.file.path;
-  console.log("Avatar Path:", avatarPath);
 
   const file = await uploadOnCloudinary(avatarPath);
    
@@ -352,7 +351,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 export {
-  userSingnUp,
+  userSignUp,
   userSignIn,
   logoutUser,
   resetOtp,

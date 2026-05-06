@@ -5,7 +5,7 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="w-full flex flex-row  justify-between items-center p-4 sm:mt-4 sm:p-6 sm:px-24 bg-transparent z-10">
+    <nav className="w-full flex flex-row  justify-between items-center px-6 mt-4 bg-transparent z-10">
     
       <div className="flex items-center gap-2 ">
         <img src="/dropbox.png" alt="Logo" className="w-10 sm:w-12" />

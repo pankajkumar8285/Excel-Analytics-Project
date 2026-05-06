@@ -7,14 +7,14 @@ import {
   resetPassword,
   uploadAvatar,
   userSignIn,
-  userSingnUp,
+  userSignUp,
 } from "../controllers/userAuth.controller.js";
 import { uploadFile } from "../middleware/multerfile.middleware.js";
 import { verifyUser } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.route("/register").post(userSingnUp);
+router.route("/register").post(userSignUp);
 
 router.route("/login").post(userSignIn);
 router.route("/logout").post(verifyUser, logoutUser);

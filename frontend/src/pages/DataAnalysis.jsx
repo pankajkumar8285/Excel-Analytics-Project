@@ -127,7 +127,7 @@ const DataAnalysis = () => {
 
             <div className="border-2 border-dashed border-blue-400 rounded-xl p-6 text-center transition hover:bg-blue-50">
               <label className="cursor-pointer flex flex-col items-center gap-2">
-                <input type="file" hidden onChange={handleFileChange} />
+                <input type="file" hidden onChange={handleFileChange} accept=".xlsx,.xls,.csv" />
                 <FaFileExcel className="text-5xl text-green-600 animate-pulse" />
                 <p className="text-gray-600">Click to upload or drag & drop</p>
                 <p className="text-sm text-gray-400">
